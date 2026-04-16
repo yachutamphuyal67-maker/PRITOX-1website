@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRITOX</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f0f0f;
+      color: white;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: #000;
+      border-bottom: 1px solid #222;
+      position: sticky;
+      top: 0;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #ff0033;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #ff0033;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .hero h1 {
+      font-size: 50px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #aaa;
+      font-size: 18px;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 12px 25px;
+      background: #ff0033;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid #333;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #333;
+    }
+
+    .price {
+      color: #ff0033;
+      font-weight: bold;
+    }
+
+    .cart {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: #ff0033;
+      padding: 15px;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+
+    .cart-box {
+      position: fixed;
+      right: 20px;
+      bottom: 80px;
+      background: #111;
+      padding: 20px;
+      width: 250px;
+      border: 1px solid #333;
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #000;
+      color: #777;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">PRITOX</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#products">Products</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>PRITOX STREETWEAR</h1>
+  <p>Built for the Bold. Trendy Fashion & Accessories in Nepal 🇳🇵</p>
+  <button class="btn">Shop Now</button>
+</section>
+
+<section class="products" id="products">
+  <div class="card">
+    <img src="https://via.placeholder.com/300x200?text=Hoodie" alt="Hoodie">
+    <h3>Hoodie</h3>
+    <p class="price">Rs. 1200</p>
+    <button class="btn" onclick="addToCart('Hoodie',1200)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="https://via.placeholder.com/300x200?text=Sunglasses" alt="Sunglasses">
+    <h3>Sunglasses</h3>
+    <p class="price">Rs. 500</p>
+    <button class="btn" onclick="addToCart('Sunglasses',500)">Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="https://via.placeholder.com/300x200?text=T-Shirt" alt="T-Shirt">
+    <h3>T-Shirt</h3>
+    <p class="price">Rs. 800</p>
+    <button class="btn" onclick="addToCart('T-Shirt',800)">Add to Cart</button>
+  </div>
+</section>
+
+<div class="cart" onclick="toggleCart()">🛒</div>
+
+<div class="cart-box" id="cartBox">
+  <h3>Your Cart</h3>
+  <div id="cartItems"></div>
+  <p id="total"></p>
+  <button class="btn" onclick="checkout()">Checkout (COD)</button>
+</div>
+
+<section id="contact" class="hero">
+  <h2>Contact Us</h2>
+  <p>DM on TikTok or Facebook to order</p>
+  <p>📞 WhatsApp / Call: 9866291077</p>
+</section>
+
+<footer>
+  © 2026 PRITOX. All rights reserved.
+</footer>
+
+<script>
+let cart = [];
+
+function addToCart(name, price) {
+  cart.push({name, price});
+  alert(name + " added to cart");
+}
+
+function toggleCart() {
+  const box = document.getElementById('cartBox');
+  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+  renderCart();
+}
+
+function renderCart() {
+  let html = '';
+  let total = 0;
+
+  cart.forEach(item => {
+    html += `<p>${item.name} - Rs. ${item.price}</p>`;
+    total += item.price;
+  });
+
+  document.getElementById('cartItems').innerHTML = html;
+  document.getElementById('total').innerText = 'Total: Rs. ' + total;
+}
+
+function checkout() {
+  alert('Order placed! We will contact you for COD delivery.');
+  cart = [];
+  renderCart();
+}
+</script>
+
+</body>
+</html>
